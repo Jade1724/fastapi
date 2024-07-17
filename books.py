@@ -25,12 +25,22 @@ async def read_all_books():
 async def read_my_book():
     return {'book_title': 'Title Two'}
 
-# Path parameter example
+# Path parameter example. Get a book by book title
 @app.get("/books/{book_title}")
 async def read_all_books(book_title: str):
     for book in BOOKS:
         if book.get('title').casefold() == book_title.casefold():
             return book
+
+# Get all books by an author
+@app.get("/books/byauthor/{author}")
+async def get_books_by_author(author: str):
+    books_to_return = []
+    for book in BOOKS:
+        if book.get("author").casefold() == author.casefold():
+            books_to_return.append(book)
+    return books_to_return
+
 
 # Query parameter example
 @app.get("/books/")
